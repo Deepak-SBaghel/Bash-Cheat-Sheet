@@ -1,12 +1,7 @@
-# Bash Cheat Sheet
-
- A cheat sheet for bash commands.
-
 ## Command History
 
 ```bash
 !!            # Run the last command
-
 touch foo.sh
 chmod +x !$   # !$ is the last argument of the last command i.e. foo.sh
 ```
@@ -117,7 +112,14 @@ tail foo.txt           # Print bottom 10 lines of file
 open foo.txt           # Open file in the default editor
 wc foo.txt             # List number of lines words and characters in the file
 ```
-
+### word count
+```bash
+wc -l file           # Count number of lines
+wc -w file           # Count number of words
+wc -c file           # Count number of bytes
+wc -m file           # Count number of characters
+wc -L file           # Find length of the longest line
+```
 ## File Permissions
 
 | # | Permission              | rwx | Binary |
@@ -219,7 +221,14 @@ sed 's/red fox/blue bear/g' foo.txt      # Replace red with blue and fox with be
 sed 's/fox/bear/g' foo.txt > bar.txt     # Replace fox with bear in foo.txt and save in bar.txt
 sed 's/fox/bear/g' foo.txt -i|--in-place # Replace fox with bear and overwrite foo.txt
 ```
-
+### printing a cloumn from strings
+```bash
+awk '{print $1}' file         # Print the first column
+awk -F',' '{print $1, $2}' file  # Print first and second column (CSV file)
+awk '/pattern/' file          # Print lines matching a pattern
+awk '{sum += $1} END {print sum}' file   # Sum the first column
+awk '{count++} END {print count}' file   # Count total lines
+```
 ## Symbolic Links
 
 ```bash
@@ -239,15 +248,6 @@ zip foo.zip /bar.txt                # Compress bar.txt into foo.zip
 zip foo.zip /bar.txt /baz.txt       # Compress bar.txt and baz.txt into foo.zip
 zip foo.zip /{bar,baz}.txt          # Compress bar.txt and baz.txt into foo.zip
 zip -r|--recurse-paths foo.zip /bar # Compress directory bar into foo.zip
-```
-
-### gzip
-
-Compresses a single file into *.gz files.
-
-```bash
-gzip /bar.txt foo.gz           # Compress bar.txt into foo.gz and then delete bar.txt
-gzip -k|--keep /bar.txt foo.gz # Compress bar.txt into foo.gz
 ```
 
 ### tar -c
@@ -285,9 +285,11 @@ tar -x|--extract -f|--file=foo.tar              # Un-combine foo.tar into curren
 ## Disk Usage
 
 ```bash
+#df preffered for whole system file
 df                     # List disks, size, used and available space
 df -h|--human-readable # List disks, size, used and available space in a human readable format
 
+# du preffered for single file 
 du                     # List current directory, subdirectories and file sizes
 du /foo/bar            # List specified directory, subdirectories and file sizes
 du -h|--human-readable # List current directory, subdirectories and file sizes in a human readable format
@@ -315,6 +317,16 @@ apt install wget             # Install the latest version of the wget package
 apt install wget=1.2.3       # Install a specific version of the wget package
 apt remove wget              # Removes the wget package
 apt upgrade                  # Upgrades all upgradable packages
+
+yum check-update             # Refresh and check for available updates
+yum search wget              # Search for a package
+yum info wget                # Show information about the wget package
+yum list wget --showduplicates   # List all available versions of wget
+yum install wget             # Install the latest version of wget
+yum install wget-1.2.3       # Install a specific version of wget
+yum remove wget              # Remove the wget package
+yum update                   # Update all upgradable packages
+
 ```
 
 ## Shutdown and Reboot
@@ -374,6 +386,20 @@ kill -9 PID            # Force shut down of process by PID. Sends SIGKILL signal
 pkill foo              # Shut down process by name gracefully. Sends TERM signal.
 pkill -9 foo           # force shut down process by name. Sends SIGKILL signal.
 killall foo            # Kill all process with the specified name gracefully.
+```
+## systemctl
+
+```bash
+systemctl start service      # Start a service immediately
+systemctl stop service       # Stop a running service
+systemctl restart service    # Restart a service
+systemctl status service     # Show current status of a service
+systemctl enable service     # Enable a service to start at boot
+systemctl disable service    # Disable a service from starting at boot
+systemctl list-units --type=service   # List currently active services
+systemctl list-unit-files --type=service  # List all services and their enable/disable state
+sudo systemctl reboot        # Reboot the system
+sudo systemctl poweroff      # Shutdown the system
 ```
 
 ## Date & Time
