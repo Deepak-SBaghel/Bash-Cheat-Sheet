@@ -215,11 +215,17 @@ egrep 'foo|bar' /baz -R                     # Use regular expressions
 ### Replace in Files
 
 ```bash
-sed 's/fox/bear/g' foo.txt               # Replace fox with bear in foo.txt and output to console
+
+sed -n '5p' file               # Print only the 5th line
+sed '5d' file                  # Delete the 5th line
+sed '/pattern/d' file          # Delete all lines matching a pattern
+sed -i 's/old/new/g' file      # Edit the file in-place (make changes directly)
+sed 's/old/new/' file          # Replace first occurrence of 'old' with 'new' in each line
+sed 's/old/new/g' file         # Replace all occurrences of 'old' with 'new' in each line
+sed 's/old/new/3' file         # Replace only the 3rd occurrence of 'old' per line
 sed 's/fox/bear/gi' foo.txt              # Replace fox (case insensitive) with bear in foo.txt and output to console
 sed 's/red fox/blue bear/g' foo.txt      # Replace red with blue and fox with bear in foo.txt and output to console
 sed 's/fox/bear/g' foo.txt > bar.txt     # Replace fox with bear in foo.txt and save in bar.txt
-sed 's/fox/bear/g' foo.txt -i|--in-place # Replace fox with bear and overwrite foo.txt
 ```
 ### printing a cloumn from strings
 ```bash
