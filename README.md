@@ -212,6 +212,31 @@ grep --extended-regexp|-E 'foo|bar' /baz -R # Use regular expressions
 egrep 'foo|bar' /baz -R                     # Use regular expressions
 ```
 
+### Pattern Matching
+```bash
+Basic Pattern Anchors:
+^ → Start of a line
+$ → End of a line
+
+Examples:
+^d → Line starts with d
+d$ → Line ends with d
+^d.*d$ → Line starts and ends with d
+
+Special Characters:
+.	    Any single character	d.d	dad, did, etc.
+*	    Zero or more of the previous	do*g	dg, dog, dooog, etc.
+\	    Escape special char	\*d	Literally *d
+[]	  Match any 1 character in set	[abc]	a, b, or c
+[^]	  Match any 1 not in set	[^abc]	Any char except a,b,c
+
+Common Patterns:
+/^$/ → Empty line
+/^[0-9]/ → Line starts with a digit
+/[^a-zA-Z]/ → Line contains non-letters
+/foo\|bar/ → Lines containing foo or bar (GNU sed only)
+
+```
 ### Replace in Files
 
 ```bash
